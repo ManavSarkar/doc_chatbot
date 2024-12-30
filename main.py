@@ -7,6 +7,9 @@ from src.llm_model import get_model
 from src.logger import logger
 import tempfile
 import base64
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 # Initialize model
 model = get_model()
 
