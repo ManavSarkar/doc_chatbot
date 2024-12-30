@@ -4,6 +4,7 @@ from langchain.vectorstores.chroma import Chroma
 from .embeddings_model import get_embedding_function
 from .prompts import get_prompt
 from .chroma_helper import search_db
+from .logger import logger
 def query_rag(query_text: str, model):
     
     results = search_db(query_text)
@@ -19,5 +20,5 @@ def query_rag(query_text: str, model):
     response = model.invoke(prompt)
     
     sources = [doc.metadata.get("id") for doc, _score in results]
-    
+    logger.debug(f"Sources: {results}")
     return response, sources
