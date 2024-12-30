@@ -29,18 +29,17 @@ def main():
                 temp_file_path = temp_file.name
 
             documents = load_pdf(temp_file_path)
-            logger.info(f"Documents {documents}")
             st.session_state["chunks"] = split_documents(documents)
             try: 
                 # if chunks is empty, show error message and return
                 if len(st.session_state["chunks"]) == 0:
+                    logger.error("No text found in the PDF. Please upload a different file.")
                     st.error("No text found in the PDF. Please upload a different file.")
                     return
                 
                 # Add to Chroma database
                 add_to_chroma(st.session_state["chunks"])
                 st.session_state["pdf_processed"] = uploaded_file.file_id
-                print(st.session_state["pdf_processed"])
             
             except Exception as e:
                 logger.error(f"Error processing PDF: {e}")

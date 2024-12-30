@@ -3,7 +3,10 @@ from langchain.vectorstores import FAISS
 from langchain_core.documents import Document
 from .embeddings_model import get_embedding_function
 from .logger import logger
-CHROMA_PATH = "chroma_db"
+import tempfile
+
+CHROMA_PATH = tempfile.mkdtemp()
+
 def add_to_chroma(chunks: list[Document]):
     db = Chroma(
         persist_directory=CHROMA_PATH,
@@ -24,3 +27,11 @@ def add_to_chroma(chunks: list[Document]):
     logger.info(f"Added {len(new_chunks)} chunks to the Chroma database")
     
     db.persist()
+    
+def search_db(query_text: str, k: int = 5):
+    db = Chroma(
+        persist_directory=CHROMA_PATH,
+        embedding_function=get_embedding_function(),
+    )
+    results = db.similarity_search_with_score(query_text, k=k)
+    return results

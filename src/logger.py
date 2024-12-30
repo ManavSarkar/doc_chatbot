@@ -3,7 +3,7 @@ import logging
 
 # Configure the logger
 LOG_FORMAT = "%(asctime)s - %(filename)s - %(levelname)s - %(message)s"
-logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT)
+logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
 
 # Create a logger object
 logger = logging.getLogger("app_logger")

@@ -3,14 +3,10 @@ from langchain_groq import ChatGroq
 from langchain.vectorstores.chroma import Chroma
 from .embeddings_model import get_embedding_function
 from .prompts import get_prompt
+from .chroma_helper import search_db
 def query_rag(query_text: str, model):
-    CHROMA_PATH = "chroma_db"
-    db = Chroma(
-        persist_directory=CHROMA_PATH,
-        embedding_function=get_embedding_function(),
-    )
     
-    results = db.similarity_search_with_score(query_text, k=5)
+    results = search_db(query_text)
     
     context_text = "\n\n".join([doc.page_content for doc, _score in results])
     PROMPT_TEMPLATE = get_prompt()
