@@ -1,10 +1,16 @@
 from langchain_community.document_loaders import PyMuPDFLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from logger import logger
+from .logger import logger
 
 def load_pdf(file_path):
     logger.info(f"Loading PDF: {file_path}")
-    return PyMuPDFLoader(file_path).load()
+    documents = PyMuPDFLoader(file_path).load()
+    # check if the document is empty
+    if len(documents) == 0:
+        logger.error("No text found in the PDF")
+    logger.info(f"Number of Documents: {len(documents)}")
+    
+    return documents
 
 def split_documents(documents):
     logger.info("Splitting Documents")
@@ -17,6 +23,9 @@ def split_documents(documents):
     )
     
     # Split the documents into chunks
+    if not documents:
+        logger.error("No documents found")
+        return []
     chunks =  text_splitter.split_documents(documents)
     for chunk in chunks:
         source = chunk.metadata.get("source")
