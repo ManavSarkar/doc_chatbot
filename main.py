@@ -7,11 +7,17 @@ from src.llm_model import get_model
 from src.logger import logger
 import tempfile
 import base64
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+from streamlit_pdf_viewer import pdf_viewer
+
+# if os is linux
+import os
+if os.name == 'posix':
+    __import__('pysqlite3')
+    import sys
+    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 # Initialize model
 model = get_model()
+# JavaScript renderer for pdf.js
 
 # Streamlit app
 def main():
@@ -83,18 +89,8 @@ def main():
 
     with right_col:
         if uploaded_file:
-                        
-            def displayPDF(file):
-                
-                base64_pdf = base64.b64encode(file).decode('utf-8')
 
-                # Embedding PDF in HTML
-                pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="500px" type="application/pdf"></iframe>'
-
-                # Displaying File
-                st.markdown(pdf_display, unsafe_allow_html=True)
-                
-            displayPDF(st.session_state["pdf_content"])
+            pdf_viewer(st.session_state["pdf_content"], height=700, width=1000)
             st.toast("PDF file uploaded successfully!")
 
 
