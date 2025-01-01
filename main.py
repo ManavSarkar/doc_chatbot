@@ -81,11 +81,11 @@ def main():
                 st.subheader("Response")
                 st.write(response.content)
 
-                st.subheader("Sources")
+                # st.subheader("Sources")
                 logger.info(f"Sources: {sources}")
-                for source in sources:
-                    logger.info(f"Source: {source}")
-                    st.write(source)
+                # for source in sources:
+                #     logger.info(f"Source: {source}")
+                #     st.write(source)
 
     with right_col:
         if uploaded_file:
