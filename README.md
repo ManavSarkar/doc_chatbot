@@ -3,6 +3,11 @@
 ## Overview
 The Document Query App is a Streamlit-based application that allows users to upload PDF files, process their content, and query the information using an AI-powered model. The app leverages various tools such as LangChain, ChromaDB, and Groq's Llama3 model to enable efficient document chunking, embedding, and question answering.
 
+Sample Output:
+![Screenshot 2025-01-03 195833](https://github.com/user-attachments/assets/6f5b9c9b-ba19-41f1-8d5a-a32e984fda32)
+
+![Screenshot 2025-01-03 195745](https://github.com/user-attachments/assets/af8998bc-3bd5-481f-81c2-477970c278ec)
+
 ## Features
 - **PDF Upload**: Upload PDF files for processing.
 - **Content Processing**: Splits the PDF content into smaller, manageable chunks.
